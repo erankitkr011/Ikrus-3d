@@ -1,1 +1,12 @@
 @import "tailwindcss";
+
+:root {
+  font-family: "Gill Sans Extrabold", sans-serif;
+  color-scheme: dark;
+}
+
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
