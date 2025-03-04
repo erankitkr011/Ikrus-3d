@@ -1,34 +1,45 @@
 import React, { useState } from "react";
 import { Search } from "lucide-react";
-import { motion } from "framer-motion";
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, suggestions, onSelect }) => {
   const [query, setQuery] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
 
   const handleChange = (e) => {
-    setQuery(e.target.value);
-    onSearch(e.target.value);
+    const value = e.target.value;
+    setQuery(value);
+    onSearch(value);
   };
 
   return (
-    <div className="relative w-50 max-w-md mx-auto">
-      <motion.div
-        className="absolute left-3 top-1/2 transform -translate-y-1/2"
-        animate={{ x: isFocused ? 150 : 0 }}
-        transition={{ type: "spring", stiffness: 200 }}
-      >
-        <Search className="text-gray-500" size={30} />
-      </motion.div>
+    <div className="relative w-80 max-w-md mx-auto">
+      <Search
+        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+        size={20}
+      />
       <input
         type="text"
         placeholder="Search models..."
         value={query}
         onChange={handleChange}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
-        className="w-full p-3 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
+        className="w-full p-3 pl-10 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
       />
+
+      {suggestions.length > 0 && (
+        <ul className="absolute w-full  mt-1 rounded-lg shadow-lg">
+          {suggestions.map((model) => (
+            <li
+              key={model.id}
+              className="p-2 cursor-pointer hover:bg-amber-50 hover:text-black"
+              onClick={() => {
+                setQuery(model.name);
+                onSelect(model);
+              }}
+            >
+              {model.highlightedName}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

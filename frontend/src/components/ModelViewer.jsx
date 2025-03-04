@@ -6,11 +6,10 @@ const ModelViewer = ({ modelUrl }) => {
   const { scene } = useGLTF(modelUrl);
 
   return (
-    <Canvas camera={{ position: [0, 2, 5] }}>
+    <Canvas camera={{ position: [0, 0, 5] }} className="h-80 w-full border">
       <ambientLight intensity={0.5} />
-      <directionalLight position={[10, 10, 10]} />
-      <OrbitControls enableZoom enableRotate enablePan />
-      <primitive object={scene} scale={2} />
+      <OrbitControls />
+      <primitive object={scene} />
     </Canvas>
   );
 };
