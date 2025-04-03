@@ -6,6 +6,7 @@ const verifyToken = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({ error: "Unauthorized: No token provided" });
   }
+  
 
   try {
     const decodedToken = await admin.auth().verifyIdToken(token);
